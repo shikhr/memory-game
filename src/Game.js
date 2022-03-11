@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import cardData from './data';
 import Card from './components/Card.js';
 import _ from 'lodash';
+import { randomCardBg } from './util';
 
 const Game = () => {
   const [gameState, setGameState] = useState(1);
@@ -12,7 +13,7 @@ const Game = () => {
 
   const clickCard = (e) => {
     if (checking) return;
-    const clicked = e.target.closest('.card');
+    const clicked = e.target.closest('.card-box');
     if (!clicked) return;
     const clickedId = +clicked.id;
 
@@ -32,10 +33,12 @@ const Game = () => {
     }
   }, [clickedCard]);
 
+  useEffect(() => {
+    randomCardBg();
+  }, []);
+
   const checkCard = () => {
-    console.log(clickedCard, selectedCard);
     if (selectedCard.id === clickedCard.id) {
-      console.log('samee');
       resetSelection();
     } else {
       setChecking(true);
@@ -46,15 +49,31 @@ const Game = () => {
       }, 800);
     }
   };
+
   const matchCards = () => {
     if (clickedCard.pair === selectedCard.pair) {
       removePair();
       checkForWin();
     }
   };
+
   const removePair = () => {
     selectedCard.clear = true;
     clickedCard.clear = true;
+  };
+
+  const checkForWin = () => {
+    if (data.some((card) => card.clear === false)) return;
+    setGameState(2);
+  };
+
+  const restart = () => {
+    setGameState(1);
+    const data1 = data.map((card) => {
+      return { ...card, clear: false, hidden: true };
+    });
+    setData(_.shuffle(data1));
+    randomCardBg();
   };
 
   const resetSelection = () => {
@@ -63,17 +82,7 @@ const Game = () => {
     setSelectedCard({});
     setClickedCard({});
   };
-  const checkForWin = () => {
-    if (data.some((card) => card.clear === false)) return;
-    setGameState(2);
-  };
-  const restart = () => {
-    setGameState(1);
-    const data1 = data.map((card) => {
-      return { ...card, clear: false, hidden: true };
-    });
-    setData(_.shuffle(data1));
-  };
+
   if (gameState === 1)
     return (
       <div className="card-container">

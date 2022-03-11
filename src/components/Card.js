@@ -3,7 +3,7 @@ import React from 'react';
 const card = ({ id, pair, value, url, hidden, clear, clickCard }) => {
   return (
     <div
-      className={clear ? 'card card-clear' : 'card'}
+      className={clear ? 'card-box card-clear' : 'card-box'}
       id={id}
       data-pair={pair}
       data-clear={clear}
