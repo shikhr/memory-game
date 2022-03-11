@@ -24,6 +24,7 @@ body {
   width: 100%;
   padding: 2rem;
   backdrop-filter: blur(10px);
+  overflow: scroll;
 }
 .card-container {
   display: grid;
