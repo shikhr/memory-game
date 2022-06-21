@@ -1,16 +1,23 @@
 import React from 'react';
 
-const card = ({ id, pair, value, url, hidden, clear, clickCard }) => {
+const card = ({ card, onClickCard, bg }) => {
+  const clickHandler = () => {
+    onClickCard(card);
+  };
   return (
     <div
-      className={clear ? 'card-box card-clear' : 'card-box'}
-      id={id}
-      data-pair={pair}
-      data-clear={clear}
-      onClick={clickCard}
+      className={
+        card.clear ? `card-box card-box-clear bg${bg}` : `card-box bg${bg}`
+      }
+      id={card.id}
+      onClick={clickHandler}
     >
-      <div className={hidden ? 'card-content card-hidden' : 'card-content'}>
-        <img src={`${url}`} alt="" />
+      <div
+        className={
+          card.hidden ? 'card-content card-content-hidden' : 'card-content'
+        }
+      >
+        <img src={`card_imgs/${card.url}`} alt="" />
       </div>
     </div>
   );
