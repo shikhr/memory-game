@@ -1,16 +1,13 @@
 import React from 'react';
 
-const card = ({ card, onClickCard, bg }) => {
-  const clickHandler = () => {
-    onClickCard(card);
-  };
+const card = ({ card, onClick, bg }) => {
   return (
     <div
       className={
         card.clear ? `card-box card-box-clear bg${bg}` : `card-box bg${bg}`
       }
       id={card.id}
-      onClick={clickHandler}
+      onClick={onClick.bind(null, card)}
     >
       <div
         className={
